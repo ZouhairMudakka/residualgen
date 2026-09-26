@@ -1,0 +1,75 @@
+{
+  "type": "object",
+  "properties": {
+    "campaign": {
+      "type": "string"
+    },
+    "deliverables": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {
+        "anyOf": [
+          {
+            "type": "object",
+            "properties": {
+              "channel": {
+                "type": "string",
+                "enum": [
+                  "email"
+                ]
+              },
+              "subject": {
+                "type": "string"
+              },
+              "body": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "channel",
+              "subject",
+              "body"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "channel": {
+                "type": "string",
+                "enum": [
+                  "social"
+                ]
+              },
+              "hook": {
+                "type": "string"
+              },
+              "caption": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "channel",
+              "hook",
+              "caption"
+            ],
+            "additionalProperties": false
+          }
+        ]
+      }
+    },
+    "review_status": {
+      "type": "string",
+      "enum": [
+        "draft"
+      ]
+    }
+  },
+  "required": [
+    "campaign",
+    "deliverables",
+    "review_status"
+  ],
+  "additionalProperties": false
+}

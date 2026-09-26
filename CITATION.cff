@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: "If you use residualgen, please cite this repository and retain attribution."
+title: "residualgen: constrained continuation of interrupted structured generations"
+type: software
+authors:
+  - family-names: Mudakka
+    given-names: Zouhair
+version: 0.1.0
+date-released: 2026-09-27
+url: "https://github.com/ZouhairMudakka/residualgen"
+repository-code: "https://github.com/ZouhairMudakka/residualgen"
+license: MIT

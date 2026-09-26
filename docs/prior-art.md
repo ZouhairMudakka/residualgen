@@ -1,0 +1,26 @@
+# Prior art and attribution
+
+Bounded public-source review: 2026-09-27. Not finding an equivalent implementation in this review is not proof of universal originality. The project claims an executable, narrowly scoped compiler contribution; it does not claim to invent selective repair, streaming parsing, schema specialization, or grammar-guided generation.
+
+| Existing work | What is already established | Inspected distinction |
+|---|---|---|
+| [Guardrails](https://github.com/guardrails-ai/guardrails/blob/06d0ff2c5f9bcb493d976b76f885e37e41ce845d/guardrails/actions/reask.py) | Field reasks, retained output, schema/merge helpers | At this pin `get_reask_subschema` returns a copied full schema; pruning is commented out. [Issue 1592](https://github.com/guardrails-ai/guardrails/issues/1592) discusses partial reasks more broadly. We do not claim the selective-reask concept is absent. |
+| [Parsantic](https://github.com/elyase/parsantic/blob/6bfffc4efe9082d5b4c183a14f96397459c63c86/src/parsantic/update.py) | JSON Patch updates, validation, coercion, streaming partials | Updates use patch paths/values with post-validation. This is a competent preservation baseline; the reviewed path does not compile a schema for a truncated nested frontier. |
+| [Trustcall](https://github.com/hinthornw/trustcall/blob/8c7312b591542cf9349ce00d2811e890ea6eef91/trustcall/_base.py) | Targeted JSON Patch correction and validation | Generic patches remain a strong baseline. We distinguish constraining the remaining value language before generation from rejecting bad patches afterward. |
+| [Instructor](https://github.com/567-labs/instructor/blob/e12f8b49203b0c1f253d27c1e709d0a09b9fc5a8/instructor/v2/dsl/partial.py) | Partial streaming and field completeness | The inspected path emits partial snapshots; [issue 784](https://github.com/567-labs/instructor/issues/784) requests output continuation. No claim that the problem is newly discovered. |
+| [nfield](https://github.com/nfield-labs/nfield/blob/c01df66462de05d9318be7457ef76b5e037c9edd/src/nfield/schema/_flatten.py) | Field partitioning, focused extraction, failed-field retry | Arrays are treated as list-leaves in the inspected flattening path; it is not the same arbitrary nested-frontier derivative. Partitioning and partial retry are credited prior art. |
+| [IterGen](https://github.com/structuredllm/itergen/tree/52d42129f36d0d272336f33e4c67b1ae3f3b51a2) | Grammar-symbol navigation, semantic checks, targeted resampling | It already establishes grammar-aware selective generation with local decoding. This package instead emits a fresh response schema and reconstruction operation; it does not resume decoder/KV state. |
+| [XGrammar](https://xgrammar.mlc.ai/docs/latest/api/python/grammar_matcher.html) | Stateful grammar matching, accepted prefixes, rollback, and next-token masks | Constrained continuation states are established prior art. XGrammar is a strong option when the application controls decoding; this package targets a fresh complete JSON response interface. It was documentation-reviewed, not benchmarked here. |
+| [L0](https://github.com/ai-2070/reliable-ai-streams-py/blob/1a6cc68b6c1879e44c9f4e432b26855a4e697b1d/WHITEPAPER.md) | Stream checkpoints, continuation, reliability | Its whitepaper recommends whole retries for structured JSON because textual checkpoint continuation can corrupt structure. This is motivation, not a defect claim. |
+
+The technical distinction tested here is automatic nested-frontier derivation that retains `anyOf` correlations and adjusts array obligations, with a reconstruction API. An equivalent handwritten specialized continuation can match or beat its wire size. The benefit against that baseline is reusable compilation, not a new capability unavailable to application authors.
+
+## Practical motivation and limits
+
+[Pixelle-Video issue 141](https://github.com/ATH-MaaS/Pixelle-Video/issues/141) reports a truncated generated video script. It motivates the problem; we did not reproduce that report or claim to fix the upstream project. Raising its output budget or generating by scene are competent alternatives. A schema with an unconstrained scene list also cannot establish that every requested scene was produced.
+
+[Official OpenAI structured-output documentation](https://developers.openai.com/api/docs/guides/structured-outputs) supplies the static profile used by the optional helper. API acceptance and enforcement were not tested. JSON Schema semantics are defined by the [Draft 2020-12 specification](https://json-schema.org/draft/2020-12).
+
+## Implementation attribution
+
+Author and copyright holder: Zouhair Mudakka. Implementation and review were assisted by Codex agents. All package, fixture, baseline, and test code in this repository was authored for this project; no compared implementation is vendored. The runtime depends on [python-jsonschema](https://github.com/python-jsonschema/jsonschema), maintained by its own contributors under its own license. JSON Patch comparisons use the established [RFC 6902](https://www.rfc-editor.org/rfc/rfc6902) format. Published comparison results concern the documented independently implemented encoding strategies, not measured success rates of those third-party libraries.

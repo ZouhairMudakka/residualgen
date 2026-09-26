@@ -1,0 +1,16 @@
+{
+  "tests_run": 11,
+  "scope": "Bounded finite universes plus mutations, not an exhaustive proof or measured model success rate.",
+  "payload_mutations": {
+    "accepted_payload_checks": 33189,
+    "rejected_payload_checks": 14938,
+    "note": "Mutation checks include repeated payload values at distinct prefixes; these are operation counts, not unique samples or estimated success rates."
+  },
+  "finite_language": {
+    "schemas": 5,
+    "prefix_checks": 323,
+    "candidate_checks": 10030,
+    "compatible_valid_candidates": 1856,
+    "invalid_or_prefix_incompatible_candidates": 8174
+  }
+}

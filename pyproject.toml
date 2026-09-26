@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "residualgen"
+version = "0.1.0"
+description = "Compile interrupted structured generations into constrained continuation schemas"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+authors = [{name = "Zouhair Mudakka"}]
+dependencies = ["jsonschema>=4.26,<5"]
+
+[project.scripts]
+residualgen = "residualgen.__main__:main"
+
+[tool.setuptools]
+packages = ["residualgen"]

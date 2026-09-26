@@ -1,0 +1,12 @@
+{
+  "resume": {
+    "deliverables": {
+      "item": {
+        "subject": "A small recovery experiment",
+        "body": "Compare the fresh continuation schema with the original schema, then inspect what was preserved."
+      },
+      "tail": []
+    },
+    "review_status": "draft"
+  }
+}
